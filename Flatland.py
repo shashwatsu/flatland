@@ -12,35 +12,35 @@ def GenerateDirt():
     for i in range(500):
         if State == 0:
             if Limit == None:
-                Limit = Prev-random.randint(4, 12)
-                Prev = Prev-random.randint(0,3)
+                Limit = Prev-random.randint(4, 40)
+                Prev = Prev-random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = 255
             
             elif Prev < Limit:
                 State = 1
                 Limit = None
-                Prev = Prev-random.randint(0,3)
+                Prev = Prev-random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = 255
             
             else:
-                Prev = Prev-random.randint(0,3)
+                Prev = Prev-random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = 255
                 print(i)
             
         elif State == 1:
             if Limit == None:
-                Limit = Prev+random.randint(4,12)
-                Prev = Prev+random.randint(0,3)
+                Limit = Prev+random.randint(4,40)
+                Prev = Prev+random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = 255
 
             elif Prev > Limit:
                 State = 0
                 Limit = None
-                Prev = Prev+random.randint(0,3)
+                Prev = Prev+random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = 255
 
             else:
-                Prev = Prev+random.randint(0,3)
+                Prev = Prev+random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = 255
                 print(i)
 
