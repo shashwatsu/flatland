@@ -5,6 +5,8 @@ from PIL import Image
 World = numpy.zeros((500, 500, 3), dtype = numpy.uint8)
 
 def GenerateDirt():
+    global Frame
+    Frame = []
     Prev = 400
     State = 0
     Limit = None
@@ -15,38 +17,47 @@ def GenerateDirt():
                 Limit = Prev-random.randint(4, 40)
                 Prev = Prev-random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = DirtColor
+                Frame.append(Prev)
             
             elif Prev < Limit:
                 State = 1
                 Limit = None
                 Prev = Prev-random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = DirtColor
+                Frame.append(Prev)
             
             else:
                 Prev = Prev-random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = DirtColor
+                Frame.append(Prev)
             
         elif State == 1:
             if Limit == None:
                 Limit = Prev+random.randint(4,40)
                 Prev = Prev+random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = DirtColor
+                Frame.append(Prev)
 
             elif Prev > Limit:
                 State = 0
                 Limit = None
                 Prev = Prev+random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = DirtColor
+                Frame.append(Prev)
 
             else:
                 Prev = Prev+random.choice((0,0,0,0,1,2))
                 World[Prev:499, i] = DirtColor
+                Frame.append(Prev)
 
 def GenerateGrass():
-    pass
+    Grass =[54, 115, 49]
+    for i in range(499):
+        World[Frame[i]:Frame[i]+random.choice((4,4,4,3,3)), i] = Grass
 
 SkyColor = [188, 220, 245]
 World[0:499, 0:499] = SkyColor
 GenerateDirt()
+GenerateGrass()
 Render = Image.fromarray(World)
-Render.save("Flatland.png")
+Render.save("Flatland.jpg", format='JPEG', quality='web_maximum', subsampling=0,quantization=0)
