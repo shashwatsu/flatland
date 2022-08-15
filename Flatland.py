@@ -51,13 +51,21 @@ def GenerateDirt():
                 Frame.append(Prev)
 
 def GenerateGrass():
-    Grass =[54, 115, 49]
+    Grass = [54, 115, 49]
     for i in range(499):
         World[Frame[i]:Frame[i]+random.choice((4,4,4,3,3)), i] = Grass
+
+def GenerateStone():
+    Stone = [153, 153, 153]
+    for i in range(499):
+        for j in range(499-Frame[i]):
+            if random.randint(1,5000)>4998:
+                World[(499-j):(499-j)+3, i:i+3] = Stone
 
 SkyColor = [188, 220, 245]
 World[0:499, 0:499] = SkyColor
 GenerateDirt()
 GenerateGrass()
+GenerateStone()
 Render = Image.fromarray(World)
 Render.save("Flatland.jpg", format='JPEG', quality='web_maximum', subsampling=0,quantization=0)
