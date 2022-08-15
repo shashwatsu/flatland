@@ -66,7 +66,17 @@ def GenerateTree():
     TreeImage = Image.open("assets/Tree.png")
     TreeImage = TreeImage.resize((70,70), 0)
     TreeArray = numpy.asarray(TreeImage, dtype=numpy.uint8)
-    print(numpy.shape(TreeArray))
+    for i in range(499):
+        if i == 100:
+            for j in range(70):
+                for k in range(70):
+                    R = TreeArray[j, k, 0]
+                    G = TreeArray[j, k, 1]
+                    B = TreeArray[j, k, 2]
+                    World[Frame[i]-70+j, i+k, 0] = R
+                    World[Frame[i]-70+j, i+k, 1] = G
+                    World[Frame[i]-70+j, i+k, 2] = B
+                    print("(",Frame[i]-70," ",i+k,")")
 
 SkyColor = [188, 220, 245, 255]
 World[0:499, 0:499] = SkyColor
@@ -74,5 +84,6 @@ GenerateDirt()
 GenerateGrass()
 GenerateStone()
 GenerateTree()
+
 Render = Image.fromarray(World)
 Render.save("Flatland.png", format='png', quality='web_maximum', subsampling=0,quantization=0)
