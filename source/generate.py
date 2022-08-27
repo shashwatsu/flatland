@@ -8,7 +8,7 @@ def generate(prev, initial):
 
     if initial==0:
         initial=1
-        seed=random.randint(100,720)
+        seed=random.randint(100,300)
         column[seed:720]=Dirt1
         column[0:seed]=Sky
         prev=seed
@@ -16,13 +16,13 @@ def generate(prev, initial):
 
     else:
         state=random.randint(0,1) #If 0 then go Uphill, if 1 then go Downhill
-        limit=random.randint(20,80)
+        limit=random.randint(200,720)
         limitcurrent=0
         if state==0:
             if limitcurrent<=limit:
                 state=1
 
-            current=prev-random.randint(0,3)
+            current=prev-random.randint(0,2)
             column[current:720]=Dirt1
             column[0:current]=Sky
             prev=current
@@ -33,7 +33,7 @@ def generate(prev, initial):
             if limitcurrent<=0:
                 state=0
             
-            current=prev+random.randint(0,3)
+            current=prev+random.randint(0,2)
             column[current:720]=Dirt1
             column[0:current]=Sky
             prev=current
@@ -47,12 +47,12 @@ print(starting)
 firstcolumn = starting[0]
 previous = starting[1]
 
-for i in range(1000):
+for i in range(720):
     tup = generate(previous,1)
     previous = tup[1]
     world = tup[0]
     firstcolumn = numpy.concatenate((firstcolumn, world), axis=1)
 
 img = Image.fromarray(firstcolumn)
-img.save("final.jpg")
+img.save("final.jpg",quality=100)
 
